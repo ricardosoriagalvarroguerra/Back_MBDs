@@ -8,14 +8,13 @@ load_dotenv()
 
 DEFAULT_ALLOWED_ORIGINS = [
     "https://frontmdbs-production.up.railway.app",
-    "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
 
 
 class Settings(BaseModel):
-    postgres_host: str = os.getenv('POSTGRES_HOST', 'localhost')
-    postgres_port: int = int(os.getenv('POSTGRES_PORT', 5433))
+    postgres_host: str = os.getenv('POSTGRES_HOST')
+    postgres_port: int = int(os.getenv('POSTGRES_PORT', 8080))
     postgres_db: str = os.getenv('POSTGRES_DB', 'indicadores_financieros')
     postgres_user: str = os.getenv('POSTGRES_USER') or ''
     postgres_password: str = os.getenv('POSTGRES_PASSWORD') or ''
