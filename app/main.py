@@ -6,18 +6,18 @@ from .routers import health
 
 app = FastAPI(title="Indicadores Financieros API")
 
-# CORS: si no hay orígenes definidos, por defecto no permitir todos
-_origins = settings.allowed_origins or [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+# CORS: si no hay orígenes definidos, utilizar la lista predeterminada segura
+_origins = list(dict.fromkeys(settings.allowed_origins))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_origins,
     allow_credentials=False,
-    allow_methods=["GET"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Asegurar que no haya redirecciones 307/308 en preflight por diferencias con slash final
+app.router.redirect_slashes = True
 
 app.include_router(health.router, prefix=settings.api_prefix)
 app.include_router(mdbs.router, prefix=settings.api_prefix)
