@@ -8,7 +8,6 @@ load_dotenv()
 
 DEFAULT_ALLOWED_ORIGINS = [
     "https://frontmdbs-production.up.railway.app",
-    "http://127.0.0.1:5173",
 ]
 
 
