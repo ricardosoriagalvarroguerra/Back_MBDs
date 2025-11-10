@@ -16,8 +16,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Asegurar que no haya redirecciones 307/308 en preflight por diferencias con slash final
-app.router.redirect_slashes = True
+# Evitar redirecciones 307/308 en preflight por diferencias con slash final
+app.router.redirect_slashes = False
 
 app.include_router(health.router, prefix=settings.api_prefix)
 app.include_router(mdbs.router, prefix=settings.api_prefix)
