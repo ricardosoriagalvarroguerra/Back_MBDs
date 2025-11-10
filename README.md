@@ -1,36 +1,12 @@
 # Backend FastAPI
 
-## Requisitos
-- Python 3.11+
-- PostgreSQL en `localhost:5433` (DB `indicadores_financieros`)
-
 ## Configuración
 
-```bash
-cd "Moodys_S&P/backend"
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-Crea/ajusta `.env` (ya creado):
-
-- POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
-- API_PREFIX (por defecto `/api`)
-- ALLOWED_ORIGINS (CSV)
-
-## Ejecutar
-
-```bash
-cd "Moodys_S&P/backend"
-python uvicorn_app.py
-```
-
-La API estará en `http://localhost:8000` y endpoints en `http://localhost:8000/api`.
-- GET `/api/mdbs/`
-- GET `/api/metrics/`
-- GET `/api/metrics/by-code?metric_code=...`
-- GET `/api/metric-values/?mdb_id=...&metric_id=...&year=...`
+- Python 3.11+
+- Variables de entorno disponibles a través de Railway (o configuradas manualmente):
+  - `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`
+  - `API_PREFIX` (por defecto `/api`)
+  - `ALLOWED_ORIGINS` (CSV)
 
 ## Deploy en Railway
 
