@@ -49,12 +49,13 @@ Opción recomendada: 1 servicio para el backend (Python) y otro para el frontend
 - Añade el plugin de PostgreSQL en Railway y conéctalo al servicio backend.
 - La app soporta `DATABASE_URL` automáticamente (coerciona a `postgresql+psycopg`).
 
-3) Frontend (Vite/React)
 - Crea un servicio de Static Site apuntando al subdirectorio `frontend`.
 - Build Command: `npm ci && npm run build`
 - Publish Directory: `dist`
-- Env: `VITE_API_URL=https://<backend>.up.railway.app/api`
+- Env: define `VITE_API_BASE_URL=https://<backend>.up.railway.app/api` (u otro dominio si el backend vive en otra ruta o dominio).
 - Incluye SPA fallback vía `frontend/static.json`.
+
+Comprueba siempre que el backend sirva los endpoints públicos esperados (`/api/mdbs/`, `/api/metrics/`, `/api/metric-values/`, etc.) y que las respuestas incluyan la cabecera `Content-Type: application/json` junto con JSON válido. Cualquier respuesta HTML hará que el frontend vuelva a mostrar el error de conexión.
 
 Notas
 - Ajusta CORS con `ALLOWED_ORIGINS` al dominio del frontend en Railway.
