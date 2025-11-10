@@ -1,9 +1,16 @@
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import List
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
+DEFAULT_ALLOWED_ORIGINS = [
+    "https://frontmdbs-production.up.railway.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
 
 class Settings(BaseModel):
@@ -15,18 +22,18 @@ class Settings(BaseModel):
 
     api_prefix: str = os.getenv('API_PREFIX', '/api')
 
-    allowed_origins: List[str] = []
+    allowed_origins: List[str] = Field(default_factory=lambda: DEFAULT_ALLOWED_ORIGINS.copy())
     log_level: str = os.getenv('LOG_LEVEL', 'INFO')
 
     @field_validator('allowed_origins', mode='before')
     @classmethod
     def parse_allowed_origins(cls, v):
-        if isinstance(v, list):
+        if isinstance(v, list) and v:
             return v
         env_val = os.getenv('ALLOWED_ORIGINS', '')
-        if not env_val:
-            return []
-        return [item.strip() for item in env_val.split(',') if item.strip()]
+        if env_val:
+            return [item.strip() for item in env_val.split(',') if item.strip()]
+        return DEFAULT_ALLOWED_ORIGINS.copy()
 
     @model_validator(mode='after')
     def ensure_db_secrets(self):
