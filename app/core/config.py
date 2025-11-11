@@ -18,7 +18,7 @@ class Settings(BaseModel):
     postgres_user: str = os.getenv('POSTGRES_USER') or ''
     postgres_password: str = os.getenv('POSTGRES_PASSWORD') or ''
 
-    api_prefix: str = os.getenv('API_PREFIX', '/api')
+    api_prefix: str = os.getenv('API_PREFIX', '')
 
     allowed_origins: List[str] = Field(default_factory=lambda: DEFAULT_ALLOWED_ORIGINS.copy())
     log_level: str = os.getenv('LOG_LEVEL', 'INFO')
